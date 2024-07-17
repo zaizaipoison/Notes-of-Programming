@@ -62,4 +62,28 @@ const callChildMethod = () => {
 }
 ```
 
+### nextTick()
 
+这个的用处是在下一次dom更新后获取最新信息，换句话说，如果你的更新是一次次的，那么这个就没什么用。
+
+### Promise
+
+这个是类似锁的用处,首先在用到这个的方法里要加上async,以声名这是个异步函数,然后,新建一个promises数组,在要等待完成的代码部分返回一个promise,最后,调用all,等待所有promise完成后,才会执行all里面的命令,我的理解是类似于你调用一个返回promise的函数时就给了一个锁,可以用于loading
+
+```
+// 创建一个空数组来存储所有的 Promise
+  const promises = [];        
+  const promise = baseService.get("/operationMonitor/history/getClassInfo", {
+          classify: item.class,
+          sid: item.sid
+        }).then((result) => {
+          // 根据结果更新 tableData1, tableData2, tableData3
+          updateTableData(result.data, item.class);
+        });
+        promises.push(promise);
+// 使用 Promise.all 等待所有的请求完成
+    Promise.all(promises).then(() => {
+      // 所有请求完成之后才设置 loading 为 false
+      state.loading = false;
+    });
+```
