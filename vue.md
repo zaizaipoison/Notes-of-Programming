@@ -30,7 +30,7 @@ let id=ref(props.id);
 
 这里有一个双向绑定的方法，父组件不变，子组件用下面这个方法
 
-```子组件
+```typescript
 let props = defineProps({
     classify:String,
     sid:String,
@@ -45,7 +45,7 @@ let {classify,sid,id}=toRefs(props)
 
 先在子组件定义方法，并且主动将其暴露
 
-```子组件
+```typescript
 const childMethod = () => { console.log('child method.') } 
 // 主动暴露childMethod方法
 defineExpose({ childMethod })
@@ -53,7 +53,7 @@ defineExpose({ childMethod })
 
 在父组件中，定义子组件的ref，附加到子组件的html上，就可以通过ref调用其方法
 
-```父组件
+```typescript
 <child ref="childRef"></child>
 
 const childRef = ref()
@@ -70,7 +70,7 @@ const callChildMethod = () => {
 
 这个是类似锁的用处,首先在用到这个的方法里要加上async,以声名这是个异步函数,然后,新建一个promises数组,在要等待完成的代码部分返回一个promise,最后,调用all,等待所有promise完成后,才会执行all里面的命令,我的理解是类似于你调用一个返回promise的函数时就给了一个锁,可以用于loading
 
-```
+```typescript
 // 创建一个空数组来存储所有的 Promise
   const promises = [];        
   const promise = baseService.get("/operationMonitor/history/getClassInfo", {
