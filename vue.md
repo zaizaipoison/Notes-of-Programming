@@ -1,3 +1,22 @@
+### [简介 | Vue.js (vuejs.org)](https://cn.vuejs.org/guide/introduction.html)
+
+### 项目构建
+
+```
+$ npm create vue@latest
+
+
+$ cd <your-project-name>
+$ npm install
+$ npm run dev
+```
+
+下面命令会在 `./dist` 文件夹中为你的应用创建一个生产环境的构建版本。
+
+```
+npm run build
+```
+
 ### 基础
 
 ctrl+/加注释和去注释，可以直接按了之后写
@@ -87,3 +106,45 @@ const callChildMethod = () => {
       state.loading = false;
     });
 ```
+
+### json与字符串互转
+
+JSON.parse()字符串转json（注意格式，key要有冒号的）
+
+JSON.stringify()json转字符串
+
+### ref和reactive的区别
+
+[ref和reactive你必须要知道的使用场景和差异 - 前端专栏 - SegmentFault 思否](https://segmentfault.com/a/1190000043356331)
+
+### 计算属性与方法
+
+```javascript
+let x=2
+const func1=()=>{
+  console.log("方法")
+  return x
+}
+const com1=computed(()=>{
+  console.log("计算属性")
+  return x
+})
+```
+
+上面的两个就分别是计算属性与方法，
+
+*computed() 方法期望接收一个 getter 函数，返回值为一个计算属性 ref。和其他一般的 ref 类似，你可以通过 com1.value 访问计算结果。计算属性 ref 也会在模板中自动解包，因此在模板表达式中引用时无需添加 .value。*
+
+*Vue 的计算属性会自动追踪响应式依赖。它会检测到 `com1` 依赖于 `x，所以当 `x` 改变时，任何依赖于 `com1` 的绑定都会同时更新。*
+
+也就是说，计算属性实际是一个属性，他在自己所依赖的响应式变量改变时，才会重新计算，在被调用时，也只会访问前一次计算后存在缓存里的值，不会再走一遍运行逻辑，而函数则每次调用都会重新执行一次运行逻辑，所以计算属性的开销小很多
+
+**一个计算属性的声明中描述的是如何根据其他值派生一个值，因此 getter 的职责应该仅为计算和返回该值，不要改变其他状态、在 getter 中做异步请求或者更改 DOM**
+
+### v-if和v-show区别
+
+v-if当条件为false时, 不会有对应的元素在DOM中
+v-show当条件为false时, 仅仅是将元素的display属性设置为none而已
+
+当需要在显示与隐藏之间切换很频繁时, 使用v-show  
+当只有一次切换时, 使用 v-if
